@@ -1,0 +1,22 @@
+{
+    "name": "vagrant/project",
+    "authors": [
+        {
+            "name": "Mahmut Bayri",
+            "email": "mahmutbayri@yahoo.com"
+        }
+    ],
+    "require": {
+        "aws/aws-sdk-php": "^3.208",
+        "vlucas/phpdotenv": "^5.4",
+        "symfony/var-dumper": "^5.4",
+        "illuminate/encryption": "^7.30",
+        "nesbot/carbon": "^2.58",
+        "phpseclib/phpseclib": "^3.0"
+    },
+    "config": {
+        "platform": {
+            "php": "7.2.5"
+        }
+    }
+}
