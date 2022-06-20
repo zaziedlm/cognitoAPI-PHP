@@ -13,7 +13,7 @@
 
     mkdir cognitoAPI-PHP
     cd cognitoAPI-PHP
-    git clone git@github.com:mahmutbayri/AWS-Cognito-PHP-Application.git .
+    git clone https://github.com/zaziedlm/cognitoAPI-PHP.git .
     composer install
     cp .env.example .env
     
