@@ -17,7 +17,7 @@
     composer install
     cp .env.example .env
     
-    edt .env    your AWS configure, Cognito userpool config.
+    edit .env    ...your AWS configure, Cognito userpool config.
 
 ## Test server
     
