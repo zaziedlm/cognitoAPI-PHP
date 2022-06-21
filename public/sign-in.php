@@ -21,7 +21,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     //         //'credentials' => false,
     //     ]);
         
+    //     #testpool22
     // //    $srp = new AwsCognitoCustomSRP($client, '3blgkg7hrfe1rgtl1p6mhqsq18', 'ap-northeast-1_qwkB5T1HH');
+    //     # testpool
     //     $srp = new AwsCognitoCustomSRP($client, '53i1ep3ffoj2g3u169o3ubfv2g', 'ap-northeast-1_GvOCuMUzv');
         
     //     $result = $srp->authenticateUser($_POST['UserName'], $_POST['password']);
