@@ -126,15 +126,23 @@ function changePasswordFirstTime($userName, $oldPassword, $newPassword)
         ],
     ]);
 
-    return getClient()->respondToAuthChallenge([
-        'ChallengeName' => 'NEW_PASSWORD_REQUIRED',
-        'ClientId' => getenv('CLIENT_ID'),
-        'ChallengeResponses' => [
-            'USERNAME' => $userName,
-            'NEW_PASSWORD' => $newPassword,
-        ],
-        'Session' => $result->get('Session'),
+    $token = $result->get('AuthenticationResult')['AccessToken'];
+
+    return getClient()->changePassword([
+        'AccessToken' => $token,
+        'PreviousPassword' => $oldPassword,
+        'ProposedPassword' => $newPassword,
     ]);
+
+    // return getClient()->respondToAuthChallenge([
+    //     'ChallengeName' => 'NEW_PASSWORD_REQUIRED',
+    //     'ClientId' => getenv('CLIENT_ID'),
+    //     'ChallengeResponses' => [
+    //         'USERNAME' => $userName,
+    //         'NEW_PASSWORD' => $newPassword,
+    //     ],
+    //     'Session' => $result->get('Session'),
+    // ]);
 }
 
 /**
