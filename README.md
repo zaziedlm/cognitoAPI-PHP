@@ -1,4 +1,4 @@
-# AWS Cognito Application
+# AWS Cognito API try progress...
 
 - Sign up
 - Sign in
@@ -11,11 +11,13 @@
 
 ## Installation
 
-    mkdir AWS-Cognito-PHP-Application
-    cd AWS-Cognito-PHP-Application
-    git clone git@github.com:mahmutbayri/AWS-Cognito-PHP-Application.git .
+    mkdir cognitoAPI-PHP
+    cd cognitoAPI-PHP
+    git clone https://github.com/zaziedlm/cognitoAPI-PHP.git .
     composer install
     cp .env.example .env
+    
+    edit .env    ...your AWS configure, Cognito userpool config.
 
 ## Test server
     
@@ -23,28 +25,9 @@
 
 http://localhost:9900/index.php
 
-## Screenshots
+## caution!!
 
-### Landing page
+    AwsCognitoCustomSRP.php
+    srp.php
 
-![](screenshots/landing-page.jpg)
-
-### Sign in page
-
-![](screenshots/sign-in-page.jpg)
-
-### Sign up page
-
-![](screenshots/sign-up-page.jpg)
-
-### Password reset page
-
-![](screenshots/password-reset-page.jpg)
-
-### Password reset confirmation page
-
-![](screenshots/password-reset-confirmation-page.jpg)
-
-### Secret page
-
-![](screenshots/secret-page.jpg)
+    It's something I'm trying out SRP(Secure Remote Password)Auth.
