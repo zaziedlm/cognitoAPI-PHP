@@ -145,6 +145,42 @@ function changePasswordFirstTime($userName, $oldPassword, $newPassword)
     // ]);
 }
 
+
+/**
+ * user attributes (e-mail) change 
+ *
+ * @param $userName
+ * @param $Password
+ * @param $oldEmail
+ * @param $newEmail
+ * @return \Aws\Result
+ */
+function changeAttributeEmail($oldEmail, $Password, $newEmail)
+{
+    $result = getClient()->adminInitiateAuth([
+        'AuthFlow' => 'ADMIN_NO_SRP_AUTH',
+        'ClientId' => getenv('CLIENT_ID'),
+        'UserPoolId' => getenv('USERPOOL_ID'),
+        'AuthParameters' => [
+            'USERNAME' => $oldEmail,
+            'PASSWORD' => $Password,
+        ],
+    ]);
+
+    $token = $result->get('AuthenticationResult')['AccessToken'];
+
+    return getClient()->updateUserAttributes([
+        'AccessToken' => $token,
+        //'ClientMetadata' => ['<string>', ...],
+        'UserAttributes' => [
+            [
+                'Name' => 'email',
+                'Value' => $newEmail,
+            ],
+        ],
+    ]);
+}
+
 /**
  * We store the token in the browser cookies
  *
