@@ -149,20 +149,19 @@ function changePasswordFirstTime($userName, $oldPassword, $newPassword)
 /**
  * user attributes (e-mail) change 
  *
- * @param $userName
+ * @param $nameEmail
  * @param $Password
- * @param $oldEmail
  * @param $newEmail
  * @return \Aws\Result
  */
-function changeAttributeEmail($oldEmail, $Password, $newEmail)
+function changeAttributeEmail($nameEmail, $Password, $newEmail)
 {
     $result = getClient()->adminInitiateAuth([
         'AuthFlow' => 'ADMIN_NO_SRP_AUTH',
         'ClientId' => getenv('CLIENT_ID'),
         'UserPoolId' => getenv('USERPOOL_ID'),
         'AuthParameters' => [
-            'USERNAME' => $oldEmail,
+            'USERNAME' => $nameEmail,
             'PASSWORD' => $Password,
         ],
     ]);
@@ -178,6 +177,35 @@ function changeAttributeEmail($oldEmail, $Password, $newEmail)
                 'Value' => $newEmail,
             ],
         ],
+    ]);
+}
+
+/**
+ * user attributes (e-mail) comfirm 
+ *
+ * @param $nameEmail
+ * @param $Password
+ * @param $code
+ * @return \Aws\Result
+ */
+function comfirmAttributeEmail($nameEmail, $Password, $code)
+{
+    $result = getClient()->adminInitiateAuth([
+        'AuthFlow' => 'ADMIN_NO_SRP_AUTH',
+        'ClientId' => getenv('CLIENT_ID'),
+        'UserPoolId' => getenv('USERPOOL_ID'),
+        'AuthParameters' => [
+            'USERNAME' => $nameEmail,
+            'PASSWORD' => $Password,
+        ],
+    ]);
+
+    $token = $result->get('AuthenticationResult')['AccessToken'];
+
+    return getClient()->verifyUserAttribute([
+        'AccessToken' => $token, // REQUIRED
+        'AttributeName' => 'email', // REQUIRED
+        'Code' => $code, // REQUIRED
     ]);
 }
 
