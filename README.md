@@ -27,7 +27,7 @@ http://localhost:9900/index.php
 
 ## caution!!
 
-    AwsCognitoCustomSRP.php
+    AwsCognitoIdentitySRP.php
     srp.php
 
     It's something I'm trying out SRP(Secure Remote Password)Auth.
