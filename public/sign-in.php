@@ -4,7 +4,7 @@ use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 
 include __DIR__ . '/../bootstrap.php';
-include __DIR__ . '/../AwsCognitoCustomSRP.php';
+include __DIR__ . '/../AwsCognitoIdentitySRP.php';
 
 $localTemplateVariableMap = [
     //
@@ -15,16 +15,16 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // SRP auth tryCode...
     //     $client = new CognitoIdentityProviderClient([
-    //         'profile' => 'default',
+    //         //'profile' => 'default',
     //         'version' => '2016-04-18',
     //         'region' => 'ap-northeast-1',
-    //         //'credentials' => false,
+    //         'credentials' => false,
     //     ]);
         
     //     #testpool22
-    // //    $srp = new AwsCognitoCustomSRP($client, '3blgkg7hrfe1rgtl1p6mhqsq18', 'ap-northeast-1_qwkB5T1HH');
+    // //    $srp = new AwsCognitoIdentitySRP($client, '3blgkg7hrfe1rgtl1p6mhqsq18', 'ap-northeast-1_qwkB5T1HH');
     //     # testpool
-    //     $srp = new AwsCognitoCustomSRP($client, '53i1ep3ffoj2g3u169o3ubfv2g', 'ap-northeast-1_GvOCuMUzv');
+    //     $srp = new AwsCognitoIdentitySRP($client, '53i1ep3ffoj2g3u169o3ubfv2g', 'ap-northeast-1_GvOCuMUzv');
         
     //     $result = $srp->authenticateUser($_POST['UserName'], $_POST['password']);
         
@@ -33,6 +33,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     //     }
         
     //     var_dump($result->toArray());
+
     //$result = auth_srp($_POST['UserName'], $_POST['password']);
         
 

@@ -5,7 +5,7 @@ use Aws\Result;
 use Carbon\Carbon;
 use phpseclib3\Math\BigInteger;
 
-class AwsCognitoCustomSRP
+class AwsCognitoIdentitySRP
 {
     const N_HEX = 'FFFFFFFFFFFFFFFFC90FDAA22168C234C4C6628B80DC1CD1'.
         '29024E088A67CC74020BBEA63B139B22514A08798E3404DD'.
@@ -251,18 +251,12 @@ class AwsCognitoCustomSRP
      */
     public function authenticateUser(string $username, string $password): Result
     {
-        //$result = $this->client->initiateAuth([
-        $result = $this->client->adminInitiateAuth([
-            //'AuthFlow' => 'USER_SRP_AUTH',
-            //'AuthFlow' => 'ADMIN_NO_SRP_AUTH',
-            'AuthFlow' => 'CUSTOM_AUTH',
+        $result = $this->client->initiateAuth([
+            'AuthFlow' => 'USER_SRP_AUTH',
             'ClientId' => $this->clientId,
             'UserPoolId' => $this->poolName,
             'AuthParameters' => [
                 'USERNAME' => $username,
-                //'PASSWORD' => $password,
-                //'ChallengeName' => 'SRP_A',
-                'CHALLENGE_NAME' => 'SRP_A',
                 'SRP_A' => $this->largeA()->toHex(),
             ],
         ]);
@@ -271,12 +265,9 @@ class AwsCognitoCustomSRP
             throw new \RuntimeException("ChallengeName `{$result->get('ChallengeName')}` is not supported.");
         }
 
-        //return $this->client->respondToAuthChallenge([
-        return $this->client->adminRespondToAuthChallenge([
+        return $this->client->respondToAuthChallenge([
             'ChallengeName' => 'PASSWORD_VERIFIER',
             'ClientId' => $this->clientId,
-            'UserPoolId' => $this->poolName,
-            'Session' => $result->get('Session'),
             'ChallengeResponses' => $this->processChallenge($result, $password)
         ]);
     }
@@ -292,11 +283,7 @@ class AwsCognitoCustomSRP
     {
         $challengeParameters = $result->get('ChallengeParameters');
         $time = Carbon::now('UTC')->format('D M j H:i:s e Y');
-        //$time = Carbon::now()->tz('UTC')->format('D M j H:i:s e Y');
-        //$urlsafe_secretBlock = str_replace(array('-', '_'), array('+', '/'), $challengeParameters['SECRET_BLOCK']);
-        //$secretBlock = base64_decode($urlsafe_secretBlock);
-        $secretBlock = $challengeParameters['SECRET_BLOCK'];
-        //$secretBlock = base64_decode($challengeParameters['SECRET_BLOCK']);
+        $secretBlock = base64_decode($challengeParameters['SECRET_BLOCK']);
         $userId = $challengeParameters['USER_ID_FOR_SRP'];
 
         $hkdf = $this->getPasswordAuthenticationKey(
