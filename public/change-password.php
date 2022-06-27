@@ -12,8 +12,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     //$token = $result->get('AuthenticationResult')['AccessToken'];
     //setAuthCookie($token);
 
-    // この場所とは全く関係ないですが、API疎通のため、Eメール変更を呼び出し確認しました
-    //$result = changeAttributeEmail('ka*****1', 'Ka*****2@', 's******@gmail.com');
+    // この場所とは全く関係ないですが、API疎通のため、各種APIを呼び出し確認しました
+    //$result = changeAttributeEmail('kataoka2', 'Kaotaka2@', 'shu01k9@yahoo.co.jp');
+    //$result = comfirmAttributeEmail('kataoka2', 'Kaotaka2@', '773878');changeUserStatusDisabled
+    //$result = changeDisableUser('kataoka10');
+    //$result = deleteCognitoUser('kataoka10');
 
     header('Location: index.php?password-changed');
     exit();

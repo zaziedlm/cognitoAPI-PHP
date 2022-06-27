@@ -168,7 +168,8 @@ function changeAttributeEmail($nameEmail, $Password, $newEmail)
 
     $token = $result->get('AuthenticationResult')['AccessToken'];
 
-    return getClient()->updateUserAttributes([
+    //return getClient()->updateUserAttributes([
+    return getClient()->adminUpdateUserAttributes([
         'AccessToken' => $token,
         //'ClientMetadata' => ['<string>', ...],
         'UserAttributes' => [
@@ -176,7 +177,58 @@ function changeAttributeEmail($nameEmail, $Password, $newEmail)
                 'Name' => 'email',
                 'Value' => $newEmail,
             ],
+            [
+                'Name' => 'email_verified',
+                'Value' => 'true',
+            ]
         ],
+        'UserPoolId' => getenv('USERPOOL_ID'),
+        'Username' => $nameEmail,
+    ]);
+}
+
+
+/**
+ * change user Status Disabled. 
+ *
+ * @param $nameEmail
+ * @param $Password
+ * @return \Aws\Result
+ */
+//function changeDisableUser($nameEmail, $Password)
+function changeDisableUser($nameEmail)
+{
+    // $result = getClient()->adminInitiateAuth([
+    //     'AuthFlow' => 'ADMIN_NO_SRP_AUTH',
+    //     'ClientId' => getenv('CLIENT_ID'),
+    //     'UserPoolId' => getenv('USERPOOL_ID'),
+    //     'AuthParameters' => [
+    //         'USERNAME' => $nameEmail,
+    //         'PASSWORD' => $Password,
+    //     ],
+    // ]);
+
+    // $token = $result->get('AuthenticationResult')['AccessToken'];
+
+    return getClient()->adminDisableUser([
+        'UserPoolId' => getenv('USERPOOL_ID'), // REQUIRED
+        'Username' => $nameEmail, // REQUIRED
+    ]);
+}
+
+
+/**
+ * delete Cognito user account. 
+ *
+ * @param $nameEmail
+ * @param $Password
+ * @return \Aws\Result
+ */
+function deleteCognitoUser($nameEmail)
+{
+    return getClient()->adminDeleteUser([
+        'UserPoolId' => getenv('USERPOOL_ID'), // REQUIRED
+        'Username' => $nameEmail, // REQUIRED
     ]);
 }
 
@@ -349,6 +401,25 @@ function signUp($username, $email, $password)
         ],
     ]);
 }
+
+
+/**
+ * Expire code. Resend registration CODE.
+ *
+ * @param $username
+ * @param $email
+ * @param $password
+ * @return \Aws\Result
+ */
+function resendCode($username)
+{
+    return getClient()->resendConfirmationCode([
+        'ClientId' => getenv('CLIENT_ID'), // REQUIRED
+        'Username' => $username, // REQUIRED
+
+    ]);
+}
+
 
 /**
  * We confirm the user
