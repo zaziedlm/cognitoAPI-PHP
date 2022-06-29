@@ -388,6 +388,7 @@ function signUp($username, $email, $password)
     return getClient()->signUp([
         'ClientId' => getenv('CLIENT_ID'),
         'Username' => $username,
+        //'Username' => uniqid(rand().'_'),
         'Password' => $password,
         'UserAttributes' => [
             [
